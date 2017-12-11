@@ -1,0 +1,34 @@
+﻿@model AjaxBeginformAspNetMVC.Models.Employee
+@Styles.Render("~/Content/css")
+<div>
+    <div class="row">
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-success">@ViewBag.Message</div>
+        }
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+    </div>
+    <span class=" alert-danger">
+        @Html.ValidationSummary()
+    </span>
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, "First Name")
+        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, "Last Name")
+        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Salary, "Salary")
+        @Html.TextBoxFor(model => model.Salary, new { @class = "form-control", @type = "number" })
+    </div>
+    <input type="submit" class="btn btn-primary " value="Submit" />
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

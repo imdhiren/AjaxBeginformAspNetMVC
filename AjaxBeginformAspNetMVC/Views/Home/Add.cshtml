@@ -1,0 +1,15 @@
+﻿@{
+}
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <div class="row">
+        <div class="col-md-6">
+            @using (Ajax.BeginForm("Add", "Home", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "frmEmp" }))
+            {
+                <div id="frmEmp">
+                    @Html.Partial("__EmployeePartial")
+                </div>
+            }
+        </div>
+    </div>
