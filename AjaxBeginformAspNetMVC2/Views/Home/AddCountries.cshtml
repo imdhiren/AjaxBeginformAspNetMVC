@@ -1,0 +1,101 @@
+﻿@model AjaxBeginformAspNetMVC2.Models.Countries
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddCountries</title>
+</head>
+
+<body>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        function OnBeginRequest() {
+            alert('On Begin');
+        }
+
+        function OnCompleteRequest(votes) {
+            alert('On Completed' + votes);
+        }
+
+        function OnSuccessRequest() {
+            alert('On Success');
+        }
+
+        function OnFailureRequest(votes) {
+            alert(votes);
+        }
+    </script>
+    @{
+        AjaxOptions options = new AjaxOptions();
+        options.HttpMethod = "POST";
+        options.OnBegin = "OnBeginRequest";
+        options.OnSuccess = "OnSuccessRequest";
+        options.OnComplete = "OnCompleteRequest";
+        options.OnFailure = "OnFailureRequest";
+        options.Confirm = "Do you want to Add Country ?";
+        options.LoadingElementId = "divProgress";
+        options.LoadingElementDuration = 1000;
+        options.InsertionMode = InsertionMode.Replace;
+    }
+    <div id="divProgress" style="display: none;">
+        <div class="modalBackground ajax-loader">
+            <img src="~/Content/ajax-loader.gif" />
+        </div>
+    </div>
+    @using (Ajax.BeginForm("AddCountries", "Home", options))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Countries</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.CountriesName)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(model => model.CountriesName)
+                @Html.ValidationMessageFor(model => model.CountriesName)
+            </div>
+
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+
+        </fieldset>
+    }
+
+
+
+    @*@{
+
+        AjaxOptions objAjaxOptions = new AjaxOptions();
+
+        objAjaxOptions.HttpMethod = "POST";
+
+        objAjaxOptions.UpdateTargetId = "divshowResponse";
+
+        objAjaxOptions.InsertionMode = InsertionMode.Replace;
+
+        objAjaxOptions.LoadingElementId = "divProgress";
+
+    }
+
+    <br />
+
+    Ajax ActionLink :-
+
+    @Ajax.ActionLink("Show Countries Data", "ViewCountry", "Home", objAjaxOptions)*@
+
+    <div id="divshowResponse">
+
+    </div>
+
+</body>
+
+</html>

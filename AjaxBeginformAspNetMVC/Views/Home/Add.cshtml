@@ -13,3 +13,436 @@
             }
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="ItemInquiry.aspx.cs" Inherits="PPI.EzyPlantMobile.ItemInquiry" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+<%@ Register TagPrefix="mobile" Namespace="System.Web.UI.MobileControls" Assembly="System.Web.Mobile" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<body>
+    <mobile:StyleSheet ID="ssMain" Runat="server" ReferencePath="~/UsrCtrls/StyleSheet.ascx">
+    </mobile:StyleSheet>
+    <mobile:Form ID="frmDispItem" Runat="Server">
+        <mobile:Panel ID="pnlHeader" Runat="server">
+            <mobile:DeviceSpecific ID="dsHeader" Runat="server">
+                <Choice Argument="html32" Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                    <ContentTemplate>
+                        <table bgcolor="#e1e4f2" cellspacing="0" width="100%">
+                            <tr>
+                                <td bgcolor="#B2B2C4" height="1px"></td>
+                            </tr>
+                            <tr>
+                                <td align="right" valign="top">
+                                    <mobile:Label ID="lblLocationTxt" Runat="server" BreakAfter="false" StyleReference="HeaderText">Location: </mobile:Label>
+                                    <mobile:Command ID="cmdLocation" Runat="server" BreakAfter="false" StyleReference="HeaderText"
+                                                    Format="link" OnClick="cmdLocation_Click"></mobile:Command>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#B2B2C4" height="1px"></td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </Choice>
+            </mobile:DeviceSpecific>
+        </mobile:Panel>
+        <mobile:Panel ID="pnlContent" Runat="server" Paginate="True">
+            <mobile:DeviceSpecific ID="cdContent" Runat="server">
+                <Choice Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                    <ContentTemplate>
+                        <table bgcolor="#F7F6F3" cellspacing="0" width="100%">
+                            <tr>
+                                <td bgcolor="#DEE7F7">
+                                    <mobile:Panel ID="pnlBreadCrumb" Runat="server">
+                                        <mobile:DeviceSpecific ID="dsContent" Runat="server">
+                                            <Choice Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                                                <ContentTemplate>
+                                                </ContentTemplate>
+                                            </Choice>
+                                        </mobile:DeviceSpecific>
+                                    </mobile:Panel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#B2B2C4" height="1px"></td>
+                            </tr>
+                            <tr>
+                                <td height="10px"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table bgcolor="#60789e" align="center">
+                                        <tr>
+                                            <td align="center">
+                                                <mobile:Label ID="lblScan" Runat="server" BreakAfter="False" StyleReference="TitleText">Scan Item Label</mobile:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table width="99%" cellspacing="2" bgcolor="#F7F6F3">
+                                                    <tr>
+                                                        <td align="center">
+                                                            <mobile:Label ID="lblMsg" Runat="server" BreakAfter="False" StyleReference="error">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center">
+                                                            <mobile:TextBox ID="txtItemID" Runat="server" BreakAfter="False" MaxLength="100"
+                                                                            Size="22">
+                                                            </mobile:TextBox>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" nowrap="nowrap">
+                                                            <mobile:Command ID="btnOk" Runat="server" OnClick="cmdOk_Click" Text="Ok" ForeColor="#60789e"
+                                                                            Font-Name="Verdana" Font-Size="Small" BreakAfter="False" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table bgcolor="#F7F6F3" width="100%" runat="server" id="tblItemDetail">
+                                        <tr>
+                                            <td colspan="2" align="center">
+                                                <mobile:Label ID="lblDispMsg" Runat="server" BreakAfter="false" StyleReference="Error">
+                                                </mobile:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="middle">
+                                                <table bgcolor="#60789e">
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="lblItemDetail" Runat="server" BreakAfter="false" StyleReference="TitleText">Order Detail</mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </Choice>
+            </mobile:DeviceSpecific>
+        </mobile:Panel>
+        <mobile:Panel ID="pnlFooter" Runat="server" StyleReference="">
+            <mobile:DeviceSpecific ID="dsFooter" Runat="server">
+                <Choice Argument="html32" Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                    <ContentTemplate>
+                        <table bgcolor="#e1e4f2" width="100%" cellspacing="0">
+                            <tr>
+                                <td bgcolor="#B2B2C4" height="1px"></td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <mobile:Command ID="btnBack" Runat="server" Font-Name="Verdana" Font-Size="Small"
+                                                    OnClick="cmdBack_Click" Text="Back" BreakAfter="False" />
+                                    <mobile:Command ID="btnLogout" Runat="server" Font-Name="Verdana" Font-Size="Small"
+                                                    OnClick="cmdLogout_Click" Text="Logout" BreakAfter="False" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td bgcolor="#B2B2C4" height="1px"></td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </Choice>
+            </mobile:DeviceSpecific>
+        </mobile:Panel>
+    </mobile:Form>
+    <mobile:Form ID="frmItemRequest" Runat="server">
+        <mobile:Panel ID="PanelItemRqst" Runat="server">
+            <mobile:DeviceSpecific ID="DeviceSpecific22" Runat="server">
+                <Choice Argument="html32" Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                    <ContentTemplate>
+                        <table bgcolor="#e1e4f2" width="100%" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table bgcolor="#60789e" align="center" width="100%">
+                                        <tr>
+                                            <td align="center">
+                                                <mobile:Label ID="lblIR" Runat="server" BreakAfter="False" StyleReference="TitleText">Emergency Request</mobile:Label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table align="center" width="99%" cellspacing="2" bgcolor="#F7F6F3">
+                                                    <tr>
+                                                        <td width="1px">
+                                                            <mobile:Label ID="Label13" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td width="300px">
+                                                            <mobile:Label ID="Label24" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                This is an emergency cutting request
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td width="150px">
+                                                            <mobile:Label ID="Label18" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label26" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label15" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <table cellpadding="0" cellspacing="0">
+                                                                <tr>
+                                                                    <td width="25px">
+                                                                        <mobile:Label ID="Label30" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                            for
+                                                                        </mobile:Label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <mobile:Label ID="lblDeptName" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                                        </mobile:Label>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label27" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label14" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label16" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label17" Runat="server" BreakAfter="False" Alignment="Left" StyleReference="Field">
+                                                                for the following Item:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label28" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="Label29" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <table align="center" width="100%" cellspacing="2" bgcolor="#F7F6F3">
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label19" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblItemType" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                Item Type:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblItemTypeValue" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label20" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblItemID" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                Item ID:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblItemIDValue" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label21" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblAltNbr" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                Alt Nbr:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblAltNbrValue" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label22" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblUOM" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                UOM:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblUOMValue" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label23" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblQty" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                Qty:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:TextBox ID="txtQtyValue" Runat="server" BreakAfter="False" MaxLength="10"
+                                                                            Size="19">
+                                                            </mobile:TextBox>
+                                                        </td>
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="Label25" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblWC" Runat="server" BreakAfter="False" StyleReference="Field">
+                                                                Primary Work Center:
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            <mobile:Label ID="lblWCValue" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+                                                            </mobile:Label>
+                                                        </td>
+                                                    </tr>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table align="center" width="99%" cellspacing="2" bgcolor="#F7F6F3">
+                                        <tr>
+                                            <td align="center"></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" valign="middle">
+                                                </b>
+                                                <mobile:Command ID="btnCancel" Runat="server" Font-Name="Verdana" Font-Size="Small"
+                                                                Text="Cancel" BreakAfter="False" OnClick="cmdbtnRqstCancel_Click" />
+                                                <mobile:Command ID="btnOK" Runat="server" Font-Name="Verdana" Font-Size="Small"
+                                                                Text="OK" BreakAfter="False" OnClick="cmdbtnRqstOK_Click" />
+
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        </td>
+                        </tr>
+                        </table>
+                    </ContentTemplate>
+                </Choice>
+            </mobile:DeviceSpecific>
+        </mobile:Panel>
+        <mobile:Panel ID="pnlCnfrm" Runat="server">
+            <mobile:DeviceSpecific ID="DeviceSpecific1" Runat="server">
+                <Choice Argument="html32" Filter="isHTML32" Xmlns="http://schemas.microsoft.com/mobile/html32template">
+                    <ContentTemplate>
+                        <table bgcolor="#e1e4f2" width="100%" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <table bgcolor="#60789e" align="center" width="100%">
+                                        <tr>
+                                            <td>
+                                                <table align="center" width="99%" cellspacing="2" bgcolor="#F7F6F3">
+                                                    <tr>
+                                                        <td>
+                                                            <mobile:Label ID="lblDeptName" Runat="server" BreakAfter="False" StyleReference="FieldValue">
+
+                                                            </mobile:Label>
+                                                        </td>
+                                                        <td>
+                                                            has received your request.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="middle">
+                                                            </b>
+                                                            <mobile:Command ID="btnOK" Runat="server" Font-Name="Verdana" Font-Size="Small"
+                                                                            Text="OK" BreakAfter="False" OnClick="cmdbtncnfmOK_Click" />
+
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </ContentTemplate>
+                </Choice>
+            </mobile:DeviceSpecific>
+        </mobile:Panel>
+    </mobile:Form>
+</body>
+</html>
